@@ -5,6 +5,15 @@
 import requests
 import json
 
+CHOSEN_LANG = 'fr'
+LANGUAGE = { 
+    'null': "",
+    'fr': "1",
+    'en': "2",
+    'de': "3",
+    'nl': "4",
+}
+
 
 class MonarcConnector:
 
@@ -91,7 +100,7 @@ class MonarcConnector:
         for sn in scaleNames["types"]:
             if sn['label1'] == None:
                 continue
-            scaleNamesExtracted[sn['id']] = sn['label1']
+            scaleNamesExtracted[sn['id']] = sn['label'+str(LANGUAGE[CHOSEN_LANG])]
 
 
         evalTable = {
@@ -105,7 +114,7 @@ class MonarcConnector:
 
             for c in theDetails['comments']:
                 if c['scaleImpactType'] != None:
-                    entry = {"val":c['val'], "description":c['comment1']}
+                    entry = {"val":c['val'], "description":c['comment'+str(LANGUAGE[CHOSEN_LANG])]}
                     if c['scaleImpactType']['id'] not in evalTable:
                         evalTable[c['scaleImpactType']['id']] = []
                     evalTable[c['scaleImpactType']['id']].append(entry)
