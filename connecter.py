@@ -5,7 +5,7 @@
 import requests
 import json
 
-CHOSEN_LANG = 'fr'
+CHOSEN_LANG = 'en'
 LANGUAGE = { 
     'null': "",
     'fr': "1",
@@ -124,8 +124,45 @@ class MonarcConnector:
         return evalTable
 
 
+
+class MonarcConnectorExtended(MonarcConnector):
+
+    def getEvaluationTable(self,anrNumber):
+        theScales = json.loads(self.loadScales(analysis['id']))
+        scaleNames = json.loads(self.loadScalesNames(analysis['id']))
+        scaleNamesExtracted = {}
+        for sn in scaleNames["types"]:
+            if sn['label1'] == None:
+                continue
+            scaleNamesExtracted[sn['id']] = sn['label'+str(LANGUAGE[CHOSEN_LANG])]
+
+
+        evalTable = {
+            "headers": scaleNamesExtracted,
+
+        }
+
+        for s in theScales['scales']:
+
+            theDetails = json.loads(self.loadScalesDescription(analysis['id'],s['id']))
+
+            for c in theDetails['comments']:
+                if c['scaleImpactType'] != None:
+                    entry = {"val":c['val'], "description":c['comment'+str(LANGUAGE[CHOSEN_LANG])]}
+                    if c['scaleImpactType']['id'] not in evalTable:
+                        evalTable[c['scaleImpactType']['id']] = []
+                    evalTable[c['scaleImpactType']['id']].append(entry)
+                    
+                    #print (" +", scaleNamesExtracted[c['scaleImpactType']['id']], c['val'], c['comment1'])
+                    pass
+        return evalTable
+
+
+
+
+
 if __name__ == "__main__":
-    monarcConn = MonarcConnector()
+    monarcConn = MonarcConnectorExtended()
 
     anrList = monarcConn.getFullAnrList()
 
