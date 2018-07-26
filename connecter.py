@@ -80,7 +80,7 @@ class MonarcConnector:
         return self.getInformation(url)
 
     def loadScalesNames(self, anrNumber):
-        url = "api/client-anr/"+str(anrNumber)+"/scales-types?order=position"
+        url = "api/client-anr/"+str(anrNumber)+"/scales-types"
         return self.getInformation(url)
 
 
@@ -113,23 +113,31 @@ if __name__ == "__main__":
         
 
         scaleNames = json.loads(monarcConn.loadScalesNames(analysis['id']))
-        final = {}
+        #print (json.dumps(scaleNames, indent=4))
+        scaleNamesExtracted = {}
         for sn in scaleNames["types"]:
-            final[str(sn['type_id'])] = sn['label1']
+            scaleNamesExtracted[sn['id']] = sn['label1']
 
-        print (json.dumps(final, indent=4))
-
+        #print (json.dumps(final, indent=4))
+        #print (json.dumps(theScales, indent=4))
         for s in theScales['scales']:
-            print (s['type'], s['min'],"to",s['max'])
+            #print (s['type'], s['min'],"to",s['max'])
+            #print (json.dumps(s,indent=4))
             theDetails = json.loads(monarcConn.loadScalesDescription(analysis['id'],s['id']))
-            
+            #print (json.dumps(theDetails,indent=4))
             #index = 1
+            
+            #print (json.dumps(theDetails['comments'],indent=4))
+
             for c in theDetails['comments']:
-                #print("  +", final[c['scale']['type']], c['val'], c['comment1'])
+                if c['scaleImpactType'] != None:
+                    print (" +", scaleNamesExtracted[c['scaleImpactType']['id']], c['val'], c['comment1'])
+                #print (json.dumps(c,indent=4))
+                #print("  +", c['val'], c['comment1'])
                 #index = index % len(final)+1
                 #print()
-                print (json.dumps(c['scale'],indent=4))
-        
+                # print (json.dumps(c))
+                pass
         
         '''
         if analysis['id'] == 481:
