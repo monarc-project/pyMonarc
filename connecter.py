@@ -1,5 +1,6 @@
 # TODO: download a complete ANR (maybe multiple files needed?)
 # TODO: test for Internet connection to the server
+# TODO: update when language stuff is done
 
 import requests
 import json
@@ -83,7 +84,35 @@ class MonarcConnector:
         url = "api/client-anr/"+str(anrNumber)+"/scales-types"
         return self.getInformation(url)
 
+    def getEvaluationTable(self,anrNumber):
+        theScales = json.loads(self.loadScales(analysis['id']))
+        scaleNames = json.loads(self.loadScalesNames(analysis['id']))
+        scaleNamesExtracted = {}
+        for sn in scaleNames["types"]:
+            if sn['label1'] == None:
+                continue
+            scaleNamesExtracted[sn['id']] = sn['label1']
 
+
+        evalTable = {
+            "headers": scaleNamesExtracted,
+
+        }
+
+        for s in theScales['scales']:
+
+            theDetails = json.loads(self.loadScalesDescription(analysis['id'],s['id']))
+
+            for c in theDetails['comments']:
+                if c['scaleImpactType'] != None:
+                    entry = {"val":c['val'], "description":c['comment1']}
+                    if c['scaleImpactType']['id'] not in evalTable:
+                        evalTable[c['scaleImpactType']['id']] = []
+                    evalTable[c['scaleImpactType']['id']].append(entry)
+                    
+                    #print (" +", scaleNamesExtracted[c['scaleImpactType']['id']], c['val'], c['comment1'])
+                    pass
+        return evalTable
 
 
 if __name__ == "__main__":
@@ -92,7 +121,7 @@ if __name__ == "__main__":
     anrList = monarcConn.getFullAnrList()
 
     for analysis in anrList:
-        print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
+        #print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
 
         allRisks = json.loads(monarcConn.loadAllInfoRisks(analysis['id']))
 
@@ -107,6 +136,8 @@ if __name__ == "__main__":
             else:
                 comment = ""
             print (str(i)+".", risk['asset'], risk['threatCode'], risk['vulnCode'], comment)
+        '''
+        
         '''
         theScales = json.loads(monarcConn.loadScales(analysis['id']))
         #print(json.dumps(theScales,indent=4))
@@ -138,7 +169,20 @@ if __name__ == "__main__":
                 #print()
                 # print (json.dumps(c))
                 pass
-        
+        '''
+
+        theTable = monarcConn.getEvaluationTable(analysis['id'])
+
+        # print (json.dumps(theTable,indent=4))
+
+        for h in theTable['headers']:
+            print()
+            print (theTable['headers'][h])
+            if h != "headers":
+                for l in theTable[h]:
+                    print ("   ",l['val'],l['description'])
+                
+
         '''
         if analysis['id'] == 481:
             xx = json.dumps(analysis, indent=4)
