@@ -78,8 +78,6 @@ if __name__ == "__main__":
         print(interviews.toJson())
 
 
-        break
-
 
 
         '''
