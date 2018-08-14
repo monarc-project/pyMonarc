@@ -9,6 +9,7 @@ from Objects.objConnector import MonarcConnector
 from Objects.objUserInformation import RiskAnalysisList
 from Objects.objRisk import InformationRisk
 from Objects.objEvaluationTable import EvaluationTableIR
+from Objects.objInterviewTable import InterviewTable
 
 CHOSEN_LANG = 'en'
 LANGUAGE = { 
@@ -29,11 +30,58 @@ if __name__ == "__main__":
     for analysis in anrList:
         #print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
 
-        infoRiskObj = InformationRisk(monarcConn,analysis['id'])
+        #infoRiskObj = InformationRisk(monarcConn,analysis['id'])
 
-        allRisks = json.loads(infoRiskObj.loadAllInfoRisks())
+        #allRisks = json.loads(infoRiskObj.loadAllInfoRisks())
 
         i=0
+        
+        #theTableObj = EvaluationTableIR(monarcConn, analysis['id'])
+        #theTable = theTableObj.getEvaluationTable()
+
+        # print (json.dumps(theTable,indent=4))
+        '''
+        for h in theTable['headers']:
+            print()
+            print (theTable['headers'][h])
+            if h != "headers":
+                for l in theTable[h]:
+                    print ("   ",l['val'],l['description'])
+                
+        '''
+
+        baseurl = "api/client-anr/"
+        url = baseurl+str(analysis['id'])+"/assets?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['assets'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/threats?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['threats'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/vulnerabilities?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['vulnerabilities'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/measures?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['measures'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/amvs?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['amvs'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/rolf-tags?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['tags'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/rolf-risks?limit=-1"
+        #print(json.dumps(json.loads(monarcConn.getInformation(url))['risks'][0],indent=4))
+
+        url = baseurl+str(analysis['id'])+"/interviews"
+        interviewList = json.loads(monarcConn.getInformation(url))['interviews']
+        interviews = InterviewTable(analysis['id'],interviewList)
+        print(interviews.toJson())
+
+
+        break
+
+
+
         '''
         for risk in allRisks['risks']:
             i+=1
@@ -78,18 +126,8 @@ if __name__ == "__main__":
                 # print (json.dumps(c))
                 pass
         '''
-        theTableObj = EvaluationTableIR(monarcConn, analysis['id'])
-        theTable = theTableObj.getEvaluationTable()
 
-        # print (json.dumps(theTable,indent=4))
 
-        for h in theTable['headers']:
-            print()
-            print (theTable['headers'][h])
-            if h != "headers":
-                for l in theTable[h]:
-                    print ("   ",l['val'],l['description'])
-                
 
         '''
         if analysis['id'] == 481:

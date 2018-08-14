@@ -3,14 +3,16 @@ import json
 
 class UserRoles:
 
+    url = "api/users-roles"
+
     def __init__(self,monarcConnector):
         self.monarcConnector = monarcConnector
 
 
     def getUserRoles(self):
         # get user roles
-        url = "api/users-roles"
-        return self.monarcConnector.getInformation(url)
+        
+        return self.monarcConnector.getInformation(self.url)
 
 
 
