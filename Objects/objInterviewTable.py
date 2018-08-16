@@ -36,14 +36,17 @@ class Interview:
     def getInterview(self):
         jsonInterview = {}
         jsonInterview['anr'] = self.anr
-        jsonInterview['content'] = self.content
         jsonInterview['date'] = self.date
         jsonInterview['service'] = self.service
+        jsonInterview['content'] = self.content
 
         return jsonInterview
 
-    def toJson(self):
-        return json.dumps(self.toJson(), sort_keys=True, indent=4)
+    def toJson(self,formatted=True):
+        if formatted:
+            return json.dumps(self.getInterview(), sort_keys=True, indent=4)
+        else:
+            return json.dumps(self.getInterview())
 
     def __repr__(self):
         return self.toJson()

@@ -26,6 +26,12 @@ class MonarcConnector:
         information = requests.get((self.base_url+url), headers=head)
         return information.content.decode()
 
+    def setInformation(self,url,jsonData):
+        head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
+        response = requests.post(self.base_url+url, json=jsonData, headers=head)
+        print (response.content)
+
+
     def testLogin(self):
         try:
             # if file exists load the token

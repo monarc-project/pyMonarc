@@ -9,7 +9,7 @@ from Objects.objConnector import MonarcConnector
 from Objects.objUserInformation import RiskAnalysisList
 from Objects.objRisk import InformationRisk
 from Objects.objEvaluationTable import EvaluationTableIR
-from Objects.objInterviewTable import InterviewTable
+from Objects.objInterviewTable import InterviewTable, Interview
 
 CHOSEN_LANG = 'en'
 LANGUAGE = { 
@@ -26,6 +26,20 @@ if __name__ == "__main__":
     anrListObj = RiskAnalysisList(monarcConn)
 
     anrList = anrListObj.getFullAnrList()
+
+    baseurl = "api/client-anr/"
+
+    analysis = anrList[-1]
+
+    url = baseurl+str(analysis['id'])+"/interviews"
+        
+    newInterview = Interview(analysis['id'], "The James Bond Test 1", "Today and Yesterday", "Michael, James, Marion and Peter")
+    #monarcConn.setInformation(url,newInterview.getInterview())
+    print (newInterview.toJson(False))
+    
+    interviewList = json.loads(monarcConn.getInformation(url))['interviews']
+    interviews = InterviewTable(analysis['id'],interviewList)
+    print(interviews.toJson())
 
     for analysis in anrList:
         #print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
@@ -50,7 +64,7 @@ if __name__ == "__main__":
                 
         '''
 
-        baseurl = "api/client-anr/"
+        
         url = baseurl+str(analysis['id'])+"/assets?limit=-1"
         #print(json.dumps(json.loads(monarcConn.getInformation(url))['assets'][0],indent=4))
 
@@ -72,10 +86,7 @@ if __name__ == "__main__":
         url = baseurl+str(analysis['id'])+"/rolf-risks?limit=-1"
         #print(json.dumps(json.loads(monarcConn.getInformation(url))['risks'][0],indent=4))
 
-        url = baseurl+str(analysis['id'])+"/interviews"
-        interviewList = json.loads(monarcConn.getInformation(url))['interviews']
-        interviews = InterviewTable(analysis['id'],interviewList)
-        print(interviews.toJson())
+        
 
 
 
