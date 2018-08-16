@@ -5,6 +5,7 @@ import json
 class MonarcConnector:
 
 
+    CLIENT_BASE_URL = "api/client-anr/"
 
     CHOSEN_LANG = 'en'
     LANGUAGE = { 
@@ -26,11 +27,20 @@ class MonarcConnector:
         information = requests.get((self.base_url+url), headers=head)
         return information.content.decode()
 
-    def setInformation(self,url,jsonData):
+    def addInformation(self,url,jsonData):
         head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
         response = requests.post(self.base_url+url, json=jsonData, headers=head)
         print (response.content)
 
+    def updateInformation(self,url,jsonData):
+        head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
+        response = requests.patch(self.base_url+url,json=jsonData, headers=head)
+        print (response.content)
+
+    def deleteInformation(self,url,jsonData):
+        head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
+        response = requests.delete(self.base_url+url,json=jsonData, headers=head)
+        print (response.content)
 
     def testLogin(self):
         try:

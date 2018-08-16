@@ -32,14 +32,20 @@ if __name__ == "__main__":
     analysis = anrList[-1]
 
     url = baseurl+str(analysis['id'])+"/interviews"
-        
+
+    ### ADD INTERVIEW   
     newInterview = Interview(analysis['id'], "The James Bond Test 1", "Today and Yesterday", "Michael, James, Marion and Peter")
-    #monarcConn.setInformation(url,newInterview.getInterview())
-    print (newInterview.toJson(False))
+    newInterview.remoteAdd(monarcConn)
+
+    #interview2change = interviews.getInterviews()[-1]
+    #interview2change.content = "Mario was the reason! NO!!!"
+    #interview2change.remoteDelete(monarcConn)
     
+
     interviewList = json.loads(monarcConn.getInformation(url))['interviews']
     interviews = InterviewTable(analysis['id'],interviewList)
     print(interviews.toJson())
+
 
     for analysis in anrList:
         #print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
