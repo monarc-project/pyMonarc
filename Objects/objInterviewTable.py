@@ -4,6 +4,8 @@ import json
 from Objects.objConnector import MonarcConnector
 
 
+
+
 class InterviewTable:
 
     def __init__(self, anrNumber, interviewList):
@@ -13,6 +15,8 @@ class InterviewTable:
             for interview in interviewList:
                 self.interviewList.append(Interview(self.anrNumber,interview['content'], interview['date'], interview['service'], interview['id']))
 
+
+
     def toJson(self):
         jsonList = [i.getInterview() for i in self.interviewList]
         
@@ -21,12 +25,17 @@ class InterviewTable:
     def getInterviews(self):
         return self.interviewList
 
+    def addInterview(self, interview):
+        self.interviewList.append(interview)
 
     def __repr__(self):
         return self.toJson()
 
     def __str__(self):
         return self.toJson()
+
+
+
 
 
 class Interview:
@@ -39,6 +48,7 @@ class Interview:
         self.date = date
         self.service = service
         self.id = id
+
 
 
     def getInterview(self):
@@ -59,12 +69,6 @@ class Interview:
         else:
             return json.dumps(self.getInterview())
 
-    def __repr__(self):
-        return self.toJson()
-
-    def __str__(self):
-        return self.toJson()
-
     def remoteUpdate(self,monarcConnection):
         if self.id == None:
             self.remoteAdd(monarcConnection)
@@ -73,7 +77,6 @@ class Interview:
             print (url)
             monarcConnection.updateInformation(url,self.getInterview())
 
-
     def remoteDelete(self,monarcConnection):
         if self.id == None:
             print('cannot delete a non-existant Object!')
@@ -81,8 +84,14 @@ class Interview:
             url = MonarcConnector.CLIENT_BASE_URL+str(self.anr)+Interview.url+"/"+str(self.id)
             monarcConnection.deleteInformation(url,self.getInterview())
 
-    
     def remoteAdd(self, monarcConnection):
         url = MonarcConnector.CLIENT_BASE_URL+str(self.anr)+Interview.url
         monarcConnection.addInformation(url,self.getInterview())
 
+
+
+    def __repr__(self):
+        return self.toJson()
+
+    def __str__(self):
+        return self.toJson()
