@@ -10,6 +10,15 @@ class Risk:
     def __init__(self,monarcConnector,anrNumber):
         self.monarcConnector = monarcConnector
         self.anrNumber = anrNumber
+    
+    def remoteUpdate(self,monarcConnection):
+        pass
+
+    def remoteDelete(self,monarcConnection):
+        pass
+        
+    def remoteAdd(self, monarcConnection):
+        pass
 
 
 

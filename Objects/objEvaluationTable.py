@@ -84,3 +84,9 @@ class Scales:
     def loadScalesNames(self, anrNumber):
         url = self.baseurl+str(anrNumber)+"/scales-types"
         return self.monarcConnector.getInformation(url)
+
+    def remoteUpdate(self,monarcConnection):
+        pass
+
+    def remoteAdd(self, monarcConnection):
+        pass
