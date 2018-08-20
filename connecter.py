@@ -34,7 +34,7 @@ if __name__ == "__main__":
     url = baseurl+str(analysis['id'])+"/interviews"
 
     ### ADD INTERVIEW   
-    newInterview = Interview(analysis['id'], "The James Bond Test 1", "Today and Yesterday", "Michael, James, Marion and Peter")
+    newInterview = Interview(analysis['id'], "That is simply the best content ever!", "Today and Yesterday", "Michael, James, Marion and Peter")
     newInterview.remoteAdd(monarcConn)
 
     #interview2change = interviews.getInterviews()[-1]
@@ -47,6 +47,7 @@ if __name__ == "__main__":
     print(interviews.toJson())
 
 
+    '''
     for analysis in anrList:
         #print (analysis['id'], analysis['label1'], analysis['description1'], "created by", analysis['creator'])
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
         #theTable = theTableObj.getEvaluationTable()
 
         # print (json.dumps(theTable,indent=4))
-        '''
+        
         for h in theTable['headers']:
             print()
             print (theTable['headers'][h])
@@ -68,7 +69,7 @@ if __name__ == "__main__":
                 for l in theTable[h]:
                     print ("   ",l['val'],l['description'])
                 
-        '''
+        
 
         
         url = baseurl+str(analysis['id'])+"/assets?limit=-1"
@@ -93,7 +94,7 @@ if __name__ == "__main__":
         #print(json.dumps(json.loads(monarcConn.getInformation(url))['risks'][0],indent=4))
 
         
-
+        '''
 
 
 
