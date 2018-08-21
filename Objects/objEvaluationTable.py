@@ -15,6 +15,7 @@ class EvaluationTableColumn:
     def __init__(self,monarcConnector):
         self.monarcConnector = monarcConnector
 
+
 class EvaluationTableIR(EvaluationTable):
 
     def __init__(self,monarcConnector,anrNumber):
@@ -52,10 +53,12 @@ class EvaluationTableIR(EvaluationTable):
                     pass
         return evalTable
 
+
 class EvaluationTableOR(EvaluationTable):
 
     def __init__(self,monarcConnector):
         self.monarcConnector = monarcConnector
+
 
 class AcceptanceTable():
 
@@ -90,3 +93,48 @@ class Scales:
 
     def remoteAdd(self, monarcConnection):
         pass
+
+    def remoteDelete(self, monarcConnection):
+        pass
+
+
+    
+class Impact():
+
+
+    def __init__(self):
+        self.c = ""
+        self.a = ""
+        self.i = ""
+        self.id = ""
+        self.isHidden = ""
+        self.locallyTouched = ""
+        self.impactType = ""
+        self.impactTypeID = ""
+        if MonarcConnector.CHOSEN_LANG == 'null':
+            self.impactTypeDescription = ""
+        else:
+            self.impactTypeDescription1 = ""
+            self.impactTypeDescription2 = ""
+            self.impactTypeDescription3 = ""
+            self.impactTypeDescription4 = ""
+
+    def getImpact(self):
+        impact = {}
+        impact['c_risk'] = self.c
+        impact['d_risk'] = self.a
+        impact['i_risk'] = self.i
+        impact['id'] = self.id
+        impact['scaleImpactType'] = self.impactType
+        impact['scaleImpactTypeId'] = self.impactTypeID
+        impact['isHidden'] = self.isHidden
+        impact['locallyTouched'] = self.locallyTouched
+        if MonarcConnector.CHOSEN_LANG == 'null':
+            impact['scaleImpactTypeDescription'] = self.impactTypeDescription
+        else:
+            impact['scaleImpactTypeDescription1'] = self.impactTypeDescription1
+            impact['scaleImpactTypeDescription2'] = self.impactTypeDescription2
+            impact['scaleImpactTypeDescription3'] = self.impactTypeDescription3
+            impact['scaleImpactTypeDescription4'] = self.impactTypeDescription4
+
+        return impact
