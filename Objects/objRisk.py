@@ -109,12 +109,16 @@ class Asset():
             'timezone':'',
             'timezone_type':'',
         }
+        self.updatedAt = {
+            'date':'',
+            'timezone':'',
+            'timezone_type':'',
+        }
         self.creator = ""
         self.id = ""
         self.mode = ""
         self.status = ""
         self.type = ""
-        self.updatedAt = ""
         self.updater = ""
 
         if MonarcConnector.CHOSEN_LANG == 'null':
@@ -132,5 +136,28 @@ class Asset():
 
     
     def getAsset(self):
-        pass
+        asset = {}
+        asset['anr'] = self.anr
+        asset['code'] = self.code
+        asset['createdAt'] = self.createdAt
+        asset['creator'] = self.creator
+        asset['id'] = self.id
+        asset['mode'] = self.mode
+        asset['status'] = self.status
+        asset['type'] = self.type
+        asset['updatedAt'] = self.updatedAt
+        asset['updated'] = self.updater
+
+        if MonarcConnector.CHOSEN_LANG == 'null':
+            self.description = ""
+            self.label = ""
+        else:
+            self.description1 = ""
+            self.description2 = ""
+            self.description3 = ""
+            self.description4 = ""
+            self.label1 = ""
+            self.label2 = ""
+            self.label3 = ""
+            self.label4 = ""
 

@@ -31,6 +31,11 @@ class MonarcConnector:
         head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
         response = requests.post(self.base_url+url, json=jsonData, headers=head)
         print (response.content)
+    
+    def putInformation(self,url,jsonData):
+        head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
+        response = requests.put(self.base_url+url, json=jsonData, headers=head)
+        print (response.content)
 
     def updateInformation(self,url,jsonData):
         head = {'token': self.user_token,'Content-Type':'application/json;charset=utf-8'}
