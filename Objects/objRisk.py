@@ -48,6 +48,14 @@ class InformationRisk(Risk):
 
 
 
+class ImpactTable():
+
+    def __init__(self):
+        #list of all impact values (R,O,L,F,P,...)
+        self.table = {}
+        # for impact in scales possibilities do
+        # append all ;)
+
 class Impact():
 
 
