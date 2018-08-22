@@ -161,3 +161,26 @@ class Asset():
             self.label3 = ""
             self.label4 = ""
 
+
+
+
+class GlobalAsset(Asset):
+    
+    
+    def __init__(self):
+        super().__init__()
+        self.instances = []
+
+
+class AssetInstance:
+
+    def __init__(self):
+        self.id = ""
+        
+        if MonarcConnector.CHOSEN_LANG == 'null':
+            self.name = ""
+        else:
+            self.name1 = ""
+            self.name2 = ""
+            self.name3 = ""
+            self.name4 = ""

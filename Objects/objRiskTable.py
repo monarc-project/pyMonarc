@@ -2,7 +2,7 @@
 
 
 
-from Objects.objRisk import *
+
 
 class RiskTable:
 

@@ -40,7 +40,8 @@ class Anr:
         self.modelLivrableDone = ""
         self.modelSummary = ""
 
-        self.objects = {}
+        #assets called objects
+        self.assets = {}
 
         if MonarcConnector.CHOSEN_LANG == 'null':
             self.description = ""
