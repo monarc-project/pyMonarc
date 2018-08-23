@@ -94,11 +94,11 @@ if __name__ == "__main__":
         #print(json.dumps(json.loads(monarcConn.getInformation(url))['risks'][0],indent=4))
 
         
-        '''
+    '''
 
 
 
-        '''
+    '''
         for risk in allRisks['risks']:
             i+=1
             #print (risk['id'], json.dumps(risk, indent=4))
@@ -108,9 +108,9 @@ if __name__ == "__main__":
             else:
                 comment = ""
             print (str(i)+".", risk['asset'], risk['threatCode'], risk['vulnCode'], comment)
-        '''
+    '''
         
-        '''
+    '''
         theScales = json.loads(monarcConn.loadScales(analysis['id']))
         #print(json.dumps(theScales,indent=4))
         
@@ -141,12 +141,12 @@ if __name__ == "__main__":
                 #print()
                 # print (json.dumps(c))
                 pass
-        '''
+    '''
 
 
 
-        '''
+    '''
         if analysis['id'] == 481:
             xx = json.dumps(analysis, indent=4)
             print (xx)
-        '''
+    '''
